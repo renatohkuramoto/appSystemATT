@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body onload="popula_dossie({{dossie}}, {{filiacao}})">
+    <div class="card text-center">
+        <div class="card-header">
+          <h2 class="card-title">Progresso do Dossie</h2>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Dossie Nº: {{id_dossie}}</h5>
+          <h6 class="card-title">Cliente: {{dados_cliente.nome_completo}}</h6>
+          <h6 class="card-title" style="display: inline;">CPF: </h6>
+          <h6 class="card-title" id="numero-cpf" style="display: inline;">{{dados_cliente.numero_cpf}}</h6>
+          <div class="col-8" style="margin: 0 auto; text-align: left;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    <tbody id="dossieTableInfo"></tbody>
+                </thead>
+            </table>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center" style="margin-bottom: 50px;">
+          <button id="btnImprimir" type="button" class="btn btn-outline-info" disabled onclick="gerar_pdf({{dados_cliente.id_cliente}})">Imprimir Documentos</button>
+          <button id="btnCadastrarProtocolo" type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modalCadastroProtocolo" style="margin-left: 15px;" disabled>Cadastrar Protocolo</button>
+        </div>
+      </div>
+</body>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalCadastroProtocolo" tabindex="-1" role="dialog" aria-labelledby="modalCadastroProtocoloTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCadastroProtocoloLongTitle">Cadastrar protocolo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="cadastro-protocolo">
+          <div class="form-row">
+            <div class="col-10">
+              <label for="inputProtocolo">Número do Protocolo</label>
+              <input type="number" class="form-control" name="protocolo" id="inputProtocolo" placeholder="Número do protocolo" required/> </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <div id="div-salvar-protocolo">
+              <button type="submit" id="btn-salvar-protocolo" class="btn btn-primary">Salvar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalMessageProtocolo" tabindex="-1" role="dialog" aria-labelledby="modalMessageProtocoloTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMessageProtocoloTitle">Aviso Cadastro Protocolo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="messagem-protocolo">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-modal-protocolo" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

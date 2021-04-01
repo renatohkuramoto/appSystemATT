@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vizualizador Documentos</title>
+<script src="{{ url_for ('dashboard.static', filename='js/pdfobject.js') }}" defer></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/materialize.css') }}" media="screen,projection"/>
+<link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/custom.css') }}"/>
+<script>
+	var access_token = '{{token}}' || null;
+</script>
+</head>
+<body>
+	<div id="pdfwindow"></div>
+	<div id="contents" class="hide">{{contents}}</div>
+	
+</body>
+<script src="{{ url_for ('dashboard.static', filename='js/jquery-3.2.1.min.js') }}" defer></script>
+<script src="{{ url_for ('dashboard.static', filename='js/materialize.js') }}" defer></script>
+<script src="{{ url_for ('dashboard.static', filename='js/custom.js') }}" defer></script>
+</html>

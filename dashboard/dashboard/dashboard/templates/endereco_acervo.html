@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Declaração de Endereço do Acervo</title>
+    <style>
+        @page {
+            size: A4 portrait;
+        }
+        
+        table,
+        th,
+        td {
+          padding: 10px;
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+      </style>
+</head>
+<body>
+
+    <h3>DECLARAÇÃO DE ENDEREÇO DE GUARDA DO ACERVO</h3>
+    
+
+<p>EU,	{{data.nome_completo}}, {{data.nacionalidade}},	natural	de
+
+{{data.naturalidade}},	nascido	em	{{data.data_nascimento}},	{{data.profissao}},	residindo	em {{data.logradouro}},{{data.numero_residencia}} - {{data.complemento}} - {{data.bairro}} - {{data.localidade}}
+e CPF nº {{data.numero_cpf}}.</p>
+
+
+<p>DECLARO, para fim de concessão de Registro no  Comando  do  Exército,  que  o  endereço de guarda   do  meu  acervo  de  (    ) colecionador, (  X  ) atirador, (    ) caçador,  está situado no {{data.logradouro}},{{data.numero_residencia}} - {{data.complemento}} - {{data.bairro}} - {{data.localidade}}</p>
+
+
+
+
+
+<p>{{data.localidade}}, {{hoje}}</p>
+<p>________________________________</p>
+
+
+
+</body>
+</html>

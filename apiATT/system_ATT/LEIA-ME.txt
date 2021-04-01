@@ -1,0 +1,30 @@
+CADASTRO DE DOCUMENTOS
+    CAMPO DATA EMISSÃO = extra_field1
+    CAMPO ORGÃO EMISSOR = extra_field2
+
+TITULO DE ELEITOR
+    CAMPO ZONA = extra_field1
+    CAMPO SEÇÃO = extra_field2
+    CAMPO MUNICÍPIO = extra_field3
+
+
+IDS TIPO DOCUMENTO
+	1 = RG
+	2 = CPF
+	3 = CNH
+	4 = TITULO ELEITOR
+	5 = Certidão Eleitoral
+	6 = Certidão Estadual
+	7 = Certidão Federal
+	8 = Certidão Militar
+	9 = Comprovante Endereço
+	10 = Comprovante Ocupação
+	11 = Comprovante Pagamento GRU
+	12 = Declaração DSA
+	13 = Declaração Antecedentes
+	14 = Declaração Endereço Acervo
+	15 = Laudo Psicológico
+	16 = Laudo Tecnico
+	17 = Requerimento Comandante
+	18 = Termo Compromisso
+

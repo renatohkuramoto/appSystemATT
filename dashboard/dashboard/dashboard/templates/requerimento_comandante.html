@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @page {
+            size: A4 portrait;
+        }
+        
+        table,
+        th,
+        td {
+          padding: 10px;
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+      </style>
+</head>
+<body>
+<div>
+<h2>REQUERIMENTO PARA CONCESSÃO/ REVALIDAÇÃO DE REGISTRO OU APOSTILAMENTO – COLECIONAMENTO, TIRO DESPORTIVO E CAÇA</h2>
+
+<p>Sr Comandante da 2ª Região Militar</p> 
+<p>1. REQUERENTE</p>
+<p><span>Nome: {{data.nome_completo}}</span>
+<span>CPF: {{data.numero_cpf}}</span>
+<span>telefone: (    ) {{data.telefone}}</span>
+</p>
+<span>Registro nº</span><br> 			
+<p>e-mail: {{data.email}}</p> 
+<p>Endereço: {{data.logradouro}},{{data.numero_residencia}}</p>
+<p>CEP: {{data.cep}} </p>
+<p>2. OBJETO</p>
+<p>(  X  ) Concessão  de registro </p>
+<p>(     ) 2ª via de registro </p>
+<p>(     ) Revalidação  de registro </p>
+<p>(     ) Cancelamento de registro </p>
+<p>(     ) Apostilamento ao registro </p>
+<p>(     ) ________________________ </p>
+<p>3. ATIVIDADE</p>
+<span>[  X  ] COLECIONAMENTO</span>
+<span>[     ] TIRO DESPORTIVO</span>
+<span>[     ] CAÇA</span>
+<p>4. DOCUMENTOS ANEXOS</p>
+<table>
+    <thead>
+        <tr>
+            <th>ORDEM</th>
+            <th>DISCRIMINAÇÃO (listar documentos)</th>
+            <th>OBS</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>5. APOSTILAMENTO</p>
+<p>6. OUTRAS INFORMAÇÕES</p>
+<p>{{data.localidade}}</p><p>, data</p>
+<p>____________________________</p>
+<p>{{data.nome_completo}}</p>
+<p>{{data.numero_cpf}}</p>
+</div>
+</body>
+</html>

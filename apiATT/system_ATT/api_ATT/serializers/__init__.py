@@ -1,0 +1,2 @@
+from .protocolo_serializer import ProtocoloSerializer
+from .protocolo_details_serializer import ProtocoloDetailsSerializer

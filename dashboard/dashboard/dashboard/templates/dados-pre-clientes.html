@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body onload="populaCamposPreCliente({{result_api}})">
+	<form id="form_cadastro_clientes" , method="POST">
+		<fieldset class="form-group" style="margin-top: 20px;">
+			<legend style="font-size: 20px;">Dados do cliente</legend>
+			<div class="form-row">
+                <div class="col-md-1 mb-3">
+                    <label for="inputIdCliente">ID</label>
+                    <input type="text" class="form-control" name="nome" id="inputIdCliente" placeholder="Nome do cliente" required disabled/>
+                </div>
+				<div class="col-md-5 mb-3">
+					<label for="inputNomeCliente">Nome completo</label>
+					<input type="text" class="form-control" name="nome" id="inputNomeCliente" placeholder="Nome do cliente" required disabled/> </div>
+				<div class="col-md-3 mb-3">
+					<label for="inputRG">Número do RG</label>
+					<input type="number" class="form-control" name="rg" id="inputRG" maxlength="9" placeholder="Número do RG" required disabled/> </div>
+				<div class="col-md-3 mb-3">
+					<label for="inputCPF">Número do CPF</label>
+					<input type="number" class="form-control" name="cpf" id="inputCPF" maxlength="11" placeholder="Número do CPF" required onfocusout="validaCPF()" disabled/> </div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="inputDataNascimento">Data Nascimento</label>
+						<input type="date" class="form-control" name="data_nascimento" id="inputDataNascimento" required disabled/> </div>
+					<div class="form-group col-md-4">
+						<label for="inputSexo">Sexo</label>
+						<select class="form-control" id="inputSexo" required disabled>
+							{% for key, value in sexualidade.items() %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="inputTelefone">Telefone Contato</label>
+						<input type="number" class="form-control" id="inputTelefone" maxlength="11" required disabled/> </div>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset class="form-group">
+			<legend style="font-size: 20px;">Dados de endereço</legend>
+			<div class="form-row">
+				<div class="col-md-1 mb-3">
+					<label for="inputCEP">CEP</label>
+					<input type="number" class="form-control" id="inputCEP" maxlength="8" required onfocusout="preencheLogradouro()" disabled/> </div>
+				<div class="col-md-5 mb-3">
+					<label for="inputLogradouro">Logradouro</label>
+					<input type="text" class="form-control" id="inputLogradouro" required disabled/> </div>
+				<div class="col-md-4 mb-3">
+					<label for="inputBairro">Bairro</label>
+					<input type="text" class="form-control" id="inputBairro" required disabled/> </div>
+				<div class="form-row">
+					<div class="col-md-2 mb-3">
+						<label for="inputNumeroResidencia">Número</label>
+						<input type="number" class="form-control" id="inputNumeroResidencia" required disabled/> </div>
+					<div class="col-md-3 mb-3">
+						<label for="inputComplemento">Complemento</label>
+						<input type="text" class="form-control" id="inputComplemento" disabled/> </div>
+					<div class="col-md-3 mb-3">
+						<label for="inputCidade">Cidade</label>
+						<input type="text" class="form-control" id="inputCidade" required disabled/> </div>
+					<div class="col-md-3 mb-3">
+						<label for="inputEstado">Estado</label>
+						<select class="form-control" id="inputEstado" required disabled>
+							{% for key, value in estados.items() %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="inputNacionalidade">Nacionalidade</label>
+                        <input type="text" class="form-control" id="inputNacionalidade" required disabled/>
+                    </div>
+					<div class="col-md-3 mb-3">
+						<label for="inputNaturalidade">Naturalidade</label>
+                        <input type="text" class="form-control" id="inputNaturalidade" required disabled/>
+                    </div>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset class="form-group">
+			<legend style="font-size: 20px;">Informações Complementares</legend>
+			<div class="form-row">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="checkEmpregoFixo" disabled/>
+					<label class="form-check-label" for="checkEmpregoFixo"> Possuí emprego fixo? </label>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="checkAntecedentes" disabled/>
+					<label class="form-check-label" for="checkAntecedentes"> Possuí antecedentes criminais? </label>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="checkAceite" disabled/>
+					<label class="form-check-label" for="checkAceite"> Está ciente que suas informações serão validadas posteriormente? </label>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group" style="margin: 5px;">
+					<button id="btnNovo" class="btn btn-info" onclick="habilitarCampos()">Editar</button>
+				</div>
+				<div id="div-cadastrar" class="form-group" style="margin: 5px;">
+					<button id="btnCadastrar" type="button" class="btn btn-success" disabled onclick="atualizarPreCadastro()">Salvar</button>
+				</div>
+				<div class="form-group" style="margin: 5px;">
+					<button id="btnCancelar" class="btn btn-warning" disabled onclick="desabilitarCamposCadastrado()">Cancelar</button>
+				</div>
+				<div class="form-group" style="margin: 5px;">
+					<button id="btnCancelar" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeletarRegistro">Deletar</button>
+				</div>
+				<div class="form-group" style="margin: 5px;">
+					<button id="btnAtivar" type="button" class="btn btn-outline-success" onclick="ativarPreCadastro()">Ativar Cliente</button>
+				</div>
+			</div>
+			</div>
+		</fieldset>
+	</form>
+	<div class="modal fade" id="modalPreCadastro" tabindex="-1" role="dialog" aria-labelledby="modalPreCadastroTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalPreCadastroTitle">Atualizar cadastro</h5> <span aria-hidden="true">&times;</span> </button>
+				</div>
+				<div class="modal-body"> </div>
+				<div class="modal-footer">
+					<button id="btnModal" type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAtivarCadastro" tabindex="-1" role="dialog" aria-labelledby="modalAtivarCadastroTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalAtivarCadastroTitle">Ativação do cadastro</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+				</div>
+				<div class="modal-body" id="textModalAtivarPreCadastro"> </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+					<div id="div-ativar">
+						<button id="btnAtivarCadastro" type="button" class="btn btn-primary">Ativar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalDeletarRegistro" tabindex="-1" role="dialog" aria-labelledby="modalDeletarRegistroTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalDeletarRegistroTitle">Deletar cadastro</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+				</div>
+				<div class="modal-body" id="dadosModalDeletarRegistro"> Deseja excluir o registro? </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<button id="btnDeletar" type="button" class="btn btn-warning" data-dismiss="modal" onclick="modelDeletarTelaDadosPreCliente()">Deletar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+{% endblock %}

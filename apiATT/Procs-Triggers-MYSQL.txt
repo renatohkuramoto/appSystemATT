@@ -1,0 +1,187 @@
+-- Primeira
+USE system_ATT;
+DELIMITER //
+  CREATE PROCEDURE `PROC_INSERT_DOCUMENTOS`( `id_cliente` int, `num_documento` varchar(20), `id_tipo_doc` int)
+BEGIN
+INSERT INTO api_att_documento (id_cliente_id, numero_documento, id_tipo_documento_id, file_ok) values (id_cliente, num_documento, id_tipo_doc, 0);
+END //
+DELIMITER ;
+
+
+-- Segunda
+USE system_ATT;
+
+DELIMITER //
+CREATE TRIGGER `TRG_INSERT_DOCUMENT_INITIAL` AFTER INSERT ON `api_att_cliente`
+FOR EACH ROW
+BEGIN
+      CALL PROC_INSERT_DOCUMENTOS (new.id_cliente, new.numero_rg, 1);
+      CALL PROC_INSERT_DOCUMENTOS (new.id_cliente, new.numero_cpf, 2);
+END //
+DELIMITER ;
+
+
+-- Terceira
+USE system_ATT;
+
+-- DROP TRIGGER IF EXISTS `TRG_CHANGE_PRE_TO_ACTIVE_CLIENTE`
+
+DELIMITER //
+CREATE TRIGGER `TRG_CHANGE_PRE_TO_ACTIVE_CLIENTE` AFTER UPDATE ON `api_att_precliente`
+FOR EACH ROW
+BEGIN
+      IF (new.activate = 1) THEN
+		INSERT INTO api_att_cliente (nome_completo,
+									 numero_rg,
+                                     numero_cpf,
+                                     data_nascimento,
+                                     telefone,
+                                     cep,
+                                     logradouro,
+                                     bairro,
+                                     numero_residencia,
+                                     complemento,
+                                     cidade,
+                                     estado,
+                                     nacionalidade,
+                                     naturalidade,
+                                     sexo,
+                                     activate) 
+			VALUES (new.nome_completo,
+					new.numero_rg,
+                    new.numero_cpf,
+                    new.data_nascimento,
+                    new.telefone,
+                    new.cep,
+					new.logradouro,
+                    new.bairro,
+                    new.numero_residencia,
+                    new.complemento,
+					new.cidade,
+					new.estado,
+					new.nacionalidade,
+                    new.naturalidade,
+					new.sexo,
+					new.activate);
+		
+      END IF;
+END //
+DELIMITER ;
+
+
+-- Quarta
+USE system_ATT;
+DELIMITER //
+-- DROP TRIGGER IF EXISTS `TRG_INSERT_DOSSIE`
+CREATE TRIGGER `TRG_INSERT_DOSSIE` AFTER INSERT ON `api_att_cliente`
+FOR EACH ROW
+BEGIN
+	INSERT INTO api_att_dossie VALUES(
+		NULL,
+		false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        NOW(),
+        new.id_cliente
+	);
+END //
+DELIMITER ;
+
+
+
+-- Quinta
+USE system_ATT;
+DELIMITER //
+-- DROP TRIGGER IF EXISTS `TRG_PROGRESS_DOCUMENTO`
+CREATE TRIGGER `TRG_PROGRESS_DOCUMENTO` AFTER INSERT ON `api_att_documento`
+FOR EACH ROW
+BEGIN
+	IF (new.id_tipo_documento_id = '5') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_certidao_eleitoral` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '6') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_certidao_estadual` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '7') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_certidao_federal` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '8') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_certidao_militar` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '9') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_comprovante_endereco` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '10') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_comprovante_ocupacao` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '11') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_comprovante_pagamento_gru` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '12') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_declaracao_seguranca_acervo` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '13') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_declaracao_antecedentes` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '14') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_declaracao_endereco_acervo` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '15') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_laudo_psicologico` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '16') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_laudo_tecnico` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '17') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_requerimento_comandante` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+	ELSEIF (new.id_tipo_documento_id = '18') THEN
+		UPDATE `api_att_dossie`
+        SET `flag_termo_ciencia_compromisso` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+    END IF;
+END //
+DELIMITER ;
+
+
+-- Sexta
+USE system_ATT;
+DELIMITER //
+-- DROP TRIGGER IF EXISTS `TRG_PROGRESS_DOCUMENTO`
+CREATE TRIGGER `TRG_PROGRESS_DOCUMENTO_RG` AFTER UPDATE ON `api_att_documento`
+FOR EACH ROW
+BEGIN
+	IF (new.id_tipo_documento_id = '1' AND new.file_ok = 1) THEN
+		UPDATE `api_att_dossie`
+        SET `flag_copia_rg_cnh` = '1'
+        WHERE (`id_cliente_id` = new.id_cliente_id);
+    END IF;
+END //
+DELIMITER ;

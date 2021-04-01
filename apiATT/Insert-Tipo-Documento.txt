@@ -1,0 +1,18 @@
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('RG');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('CPF');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('CNH');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('TITULO DE ELEITOR');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('CERTIDÃO ELEITORAL');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('CERTIDÃO ESTADUAL');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('CERTIDÃO FEDERAL');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('CERTIDÃO MILITAR');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('COMPROVANTE DE ENDEREÇO');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('COMPROVANTE DE OCUPAÇÃO');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('COMPROVANTE PGTO GRU');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('DECLARAÇÃO DSA');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('DECLARAÇÃO DE ANTECEDENTES');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('DECLARAÇÃO ENDEREÇO ACERVO');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('LAUDO PSICOLÓGICO');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('LAUDO TÉCNICO');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('REQUERIMENTO COMANDANTE');
+INSERT INTO `system_att`.`api_att_tipodocumento` (`descricao_documento`) VALUES ('TERMO DE COMPROMISSO');

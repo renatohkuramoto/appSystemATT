@@ -1,0 +1,10 @@
+python manage.py createsuperuser
+
+criar o usuário
+acessar o admin
+
+E adicionar a aplicação em DJANGO OAUTH TOOLKIT
+Definir o Client type = Confidential
+Authorization grant type = Resource owner password-based
+
+Copiar o Client_id e o Client_Secret e definir no data_config.py no Dashboard

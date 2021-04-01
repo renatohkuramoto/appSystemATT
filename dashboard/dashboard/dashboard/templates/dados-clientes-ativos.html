@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body onload="populaCamposClientesAtivos({{result_api}}, {{tipos_documentos}}, {{extra_info}})">
+    <form id="form_cadastro_clientes" , method="POST">
+		<fieldset class="form-group" style="margin-top: 20px;">
+			<legend style="font-size: 20px;">Dados do cliente</legend>
+			<div class="form-row">
+                <div class="col-md-1 mb-3">
+                    <label for="inputIdCliente">ID</label>
+                    <input type="text" class="form-control" name="nome" id="inputIdCliente" placeholder="Nome do cliente" required disabled/></div>
+				<div class="col-md-5 mb-3">
+					<label for="inputNomeCliente">Nome completo</label>
+					<input type="text" class="form-control" name="nome" id="inputNomeCliente" placeholder="Nome do cliente" required disabled/> </div>
+				<div class="col-md-2 mb-3">
+					<label for="inputRG">Número do RG</label>
+					<input type="number" class="form-control" name="rg" id="inputRG" maxlength="9" placeholder="Número do RG" required disabled/> </div>
+				<div class="col-md-2 mb-3">
+					<label for="inputCPF">Número do CPF</label>
+					<input type="number" class="form-control" name="cpf" id="inputCPF" maxlength="11" placeholder="Número do CPF" required onfocusout="validaCPF()" disabled/> </div>
+				<div class="form-row">
+					<div class="col-md-4 mb-3">
+						<label for="inputDataNascimento">Data Nascimento</label>
+						<input type="date" class="form-control" name="data_nascimento" id="inputDataNascimento" required disabled/> </div>
+					<div class="form-group col-md-4">
+						<label for="inputSexo">Sexo</label>
+						<select class="form-control" id="inputSexo" required disabled>
+							{% for key, value in sexualidade.items() %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="inputTelefone">Telefone Contato</label>
+						<input type="number" class="form-control" id="inputTelefone" maxlength="11" required disabled/> </div>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset class="form-group">
+			<legend style="font-size: 20px;">Dados de endereço</legend>
+			<div class="form-row">
+				<div class="col-md-2 mb-3">
+					<label for="inputCEP">CEP</label>
+					<input type="number" class="form-control" id="inputCEP" maxlength="8" required onfocusout="preencheLogradouro()" disabled/> </div>
+				<div class="col-md-5 mb-3">
+					<label for="inputLogradouro">Logradouro</label>
+					<input type="text" class="form-control" id="inputLogradouro" required disabled/> </div>
+				<div class="col-md-4 mb-3">
+					<label for="inputBairro">Bairro</label>
+					<input type="text" class="form-control" id="inputBairro" required disabled/> </div>
+				<div class="form-row">
+					<div class="col-md-2 mb-3">
+						<label for="inputNumeroResidencia">Número</label>
+						<input type="number" class="form-control" id="inputNumeroResidencia" required disabled/> </div>
+					<div class="col-md-3 mb-3">
+						<label for="inputComplemento">Complemento</label>
+						<input type="text" class="form-control" id="inputComplemento" disabled/> </div>
+					<div class="col-md-3 mb-3">
+						<label for="inputCidade">Cidade</label>
+						<input type="text" class="form-control" id="inputCidade" required disabled/> </div>
+					<div class="form-group col-md-3">
+						<label for="inputEstado">Estado</label>
+						<select class="form-control" id="inputEstado" required disabled>
+							{% for key, value in estados.items() %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="inputNacionalidade">Nacionalidade</label>
+                        <input type="text" class="form-control" id="inputNacionalidade" required disabled/>
+                    </div>
+					<div class="col-md-3 mb-3">
+						<label for="inputNaturalidade">Naturalidade</label>
+                        <input type="text" class="form-control" id="inputNaturalidade" required disabled/>
+                    </div>
+				</div>
+			</div>
+		</fieldset>
+                <div class="form-row">
+                    <div class="form-group" style="margin: 5px;">
+                        <button id="btnNovo" class="btn btn-info" onclick="habilitarCampos()">Editar</button>
+                    </div>
+                    <div class="form-group" style="margin: 5px;">
+                        <button id="btnCadastrar" type="button" class="btn btn-success" disabled onclick="atualizarCadastroAtivo()">Salvar</button>
+                    </div>
+                    <div class="form-group" style="margin: 5px;">
+                        <button id="btnCancelar" class="btn btn-warning" disabled onclick="desabilitarCamposAtivo()">Cancelar</button>
+                    </div>
+                    <div class="form-group" style="margin: 5px;">
+                        <button id="btnCancelar" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDeletarRegistro">Deletar</button>
+                    </div>
+                    <div class="form-group" style="margin: 5px;">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Emitir Formulários
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{url_for('dashboard.dsa',cpf = cpf)}}">Emitir DSA</a>
+                            <a class="dropdown-item" href="{{url_for('dashboard.requerimento_comandante',cpf = cpf)}}">Emitir Requerimento</a>
+                            <a class="dropdown-item" href="{{url_for('dashboard.endereco_acervo',cpf = cpf)}}">Emitir Endereço Acervo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </fieldset>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Documentos</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Número</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                                <tbody id="documentoTable"></tbody>
+                            </thead>
+                        </table>
+                        <a href="" class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarDocumento">Adicionar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Informações Extras</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                                <tbody id="ExtraInfoTable"></tbody>
+                            </thead>
+                        </table>
+                        <a href="" class="btn btn-primary" data-toggle="modal" data-target="#ModalInfoExtras">Adicionar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</form>
+</body>
+
+    <div class="modal fade" id="modalPreCadastro" tabindex="-1" role="dialog" aria-labelledby="modalPreCadastroTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalPreCadastroTitle">Aviso</h5>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button id="btnModal" type="button" class="btn btn-warning" data-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+        <div class="modal fade" id="modalDeletarRegistro" tabindex="-1" role="dialog" aria-labelledby="modalDeletarRegistroTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="modalDeletarRegistroTitle">Deletar cadastro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body" id="dadosModalDeletarRegistro">
+                    Deseja excluir o registro?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button id="btnDeletar" type="button" class="btn btn-warning" data-dismiss="modal" onclick="modelDeletarTelaDadosClienteAtivo()">Deletar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAdicionarDocumento" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarDocumentoTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAdicionarDocumentoTitle">Adicionar Documento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="dadosAdicionarDocumento">
+                        <form class="md-form" id="form-documentos">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputTipoDocumento">Tipo de documento *</label>
+                                        <select class="form-control" id="inputTipoDocumento" onchange="atualizarModalDocumentos()" required>
+                                            <option></option>
+                                            {% for key, value in  tipos_documentos.items() %}
+                                                <option value="{{ key }}">{{ value }}</option>
+                                            {% endfor %}
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row" id="divDocumentos">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="inputFile">Escolher arquivo *</label>
+                                        <input type="file" class="form-control-file" id="inputFile" accept="application/pdf" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <span style="color: red;">campos obrigatórios (*)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <div id="div-enviar">
+                                    <button id="btnSalvarDocumento" type="submit" class="btn btn-warning">Enviar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+
+        <div class="modal fade" id="ModalErrorDocumentos" tabindex="-1" role="dialog" aria-labelledby="ModalErrorDocumentosTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="ModalErrorDocumentosTitle">Cadastro de documentos</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Preencha todos os campos obrigatórios!
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="ModalInfoExtras" tabindex="-1" role="dialog" aria-labelledby="ModalInfoExtrasTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="ModalInfoExtrasTitle">Registrar Informações</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="form-info-extras" class="forms-info" novalidate , method="PUT">
+                    <div class="form-row" style="margin-bottom: 20px;">
+                    <div class="col-10">
+                        <label for="inputPai">Nome do Pai</label>
+                        <input type="text" class="form-control" id="inputPai"/> </div>
+                    <div class="col-10">
+                        <label for="inputMae">Nome da Mãe</label>
+                        <input type="text" class="form-control" id="inputMae"/> </div>
+                    <div class="col-7">
+                        <label for="inputProfissao">Profissão</label>
+                        <input type="text" class="form-control" id="inputProfissao"/> </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <div id="div-extras">
+                        <button id="btnSalvarInfoExtras" type="submit" class="btn btn-warning">Salvar</button>
+                    </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+{% endblock %}

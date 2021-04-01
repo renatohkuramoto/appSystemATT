@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{{ url_for('dashboard.static', filename='images/favicon.ico') }}"> 
+    <link href="{{ url_for('dashboard.static', filename='css/css.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/style.css') }}">
+    <script src="{{ url_for ('dashboard.static', filename='js/jquery-3.5.1.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('dashboard.static', filename='css/jquery.dataTables.min.css') }}">
+    {% block styles %}
+    {% endblock %}
+    <script>
+        var access_token = '{{token}}' || null;
+    </script>
+</head>
+
+<body>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="p-4 pt-5">
+                <a href="#" class="img logo rounded-circle mb-5" style="background-image: url({{ url_for('dashboard.static', filename='images/logo.svg') }});"></a>
+                <ul class="list-unstyled components mb-5">
+                    <li class="active">
+                        <a class="new-font-size" href="{{ url_for('dashboard.dash') }}">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#pagePreClientes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle new-font-size">Pré Clientes</a>
+                        <ul class="collapse list-unstyled" id="pagePreClientes">
+                            <li>
+                                <a href="{{ url_for('dashboard.pre_clientes') }}">Pré Cadastro</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('dashboard.listar_pre_clientes') }}">Buscar Cliente</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#pageClientesAtivos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle new-font-size">Clientes Ativos</a>
+                        <ul class="collapse list-unstyled" id="pageClientesAtivos">
+                            <li>
+                                <a href="{{ url_for('dashboard.listar_clientes_ativos') }}">Gerenciar Clientes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#pageDissie" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle new-font-size">Dossie</a>
+                        <ul class="collapse list-unstyled" id="pageDissie">
+                            <li>
+                                <a href="{{ url_for('dashboard.listar_dossie') }}">Gerenciar Dossies</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#pageProtocolos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle new-font-size">Protocolos</a>
+                        <ul class="collapse list-unstyled" id="pageProtocolos">
+                            <li>
+                                <a href="{{ url_for('dashboard.listar_protocolos') }}">Vizualizar Protocolos</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="new-font-size" href="{{ url_for('dashboard.suporte') }}">Suporte</a>
+                    </li>
+                </ul>
+
+                <div class="footer">
+                    <span>Copyright &copy;<script>document.write(new Date().getFullYear());</script></span><br/>
+                    <span>Todos os diretiros reservados</span>
+                    <span>TechFive tecnologia.</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Menu Lateral</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link new-font-size" href="{{ url_for('dashboard.dash') }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link new-font-size" href="{{ url_for('dashboard.logout') }}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <h3 class="text-monospace" style="color: #666; font-size: 2rem;">{{ type }}</h3>
+            <header>
+                {% block content %}
+                {% endblock %}
+            </header>
+        </div>
+    </div>
+    <script src="{{ url_for ('dashboard.static', filename='js/jquery.min.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/popper.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/main.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/apexcharts.min.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/requests.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/functions.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/jquery.dataTables.min.js') }}" defer></script>
+    <script src="{{ url_for ('dashboard.static', filename='js/md5.min.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

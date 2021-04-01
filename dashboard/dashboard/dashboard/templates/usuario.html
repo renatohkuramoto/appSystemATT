@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<form>
+  <div class="form-row">
+      <div class="form-group col-md-6">
+          <label for="inputUsuario">Usuário do sistema</label>
+          <input type="email" class="form-control" id="inputUsuario" placeholder="Usuário do sistema">
+      </div>
+      <div class="form-group col-md-6">
+          <label for="inputPassword">Senha do usuário</label>
+          <input type="password" class="form-control" id="inputPassword" placeholder="Senha do usuário do sistema">
+      </div>
+  </div>
+  <div class="form-row">
+      <div class="form-group col-md-4">
+          <label for="inputCEP">Código Postal</label>
+          <input type="number" class="form-control" id="inputCEP">
+      </div>
+      <div class="form-group col-md-4">
+          <label for="inputEstado">Estado</label>
+          <select id="inputEstado" class="form-control">
+              <option selected>Selecione...</option>
+              <option>São Paulo</option>
+              <option>Santa Catarina</option>
+          </select>
+      </div>
+      <div class="form-group col-md-4">
+          <label for="inputCidade">Cidade</label>
+          <input type="text" class="form-control" id="inputCidade">
+      </div>
+  </div>
+  <div class="form-row">
+      <div class="form-group col-md-4">
+          <label for="inputEndereco">Endereço</label>
+          <input type="text" class="form-control" id="inputEndereco" placeholder="Digite o endereço">
+      </div>
+      <div class="form-group col-md-4">
+          <label for="inputNumero">Número</label>
+          <input type="number" class="form-control" id="inputNumero" placeholder="Digite o número">
+      </div>
+      <div class="form-group col-md-4">
+          <label for="inputComplemento">Complemento</label>
+          <input type="text" class="form-control" id="inputComplemento" placeholder="Digite o Complemento">
+      </div>
+  </div>
+  <button type="submit" class="btn btn-info">Consultar</button>
+  <button type="submit" class="btn btn-success">Cadastrar</button>
+  <button type="submit" class="btn btn-primary">Alterar</button>
+  <button type="submit" class="btn btn-danger">Deletar</button>
+</form>
+{% endblock %}
